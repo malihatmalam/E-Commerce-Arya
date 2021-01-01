@@ -11,10 +11,14 @@ class CreateProvincesTable extends Migration
      *
      * @return void
      */
+
+    // YANG NANTI AKAN DO MIGRATE (INI DI SEEDER)
     public function up()
     {
         Schema::create('provinces', function (Blueprint $table) {
             $table->bigIncrements('id');
+            // Atribute nama
+            $table->string('name');
             $table->timestamps();
         });
     }

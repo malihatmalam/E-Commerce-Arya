@@ -11,10 +11,19 @@ class CreateCitiesTable extends Migration
      *
      * @return void
      */
+    // YANG NANTI AKAN DI MIGRATE (INI DI SEEDER)
     public function up()
     {
         Schema::create('cities', function (Blueprint $table) {
             $table->bigIncrements('id');
+            // Atribute nama
+            $table->string('name');
+            // Atribute tipe
+            $table->string('type');
+            // Atribute kode pos
+            $table->string('postal_code');
+            // Atribute yang menghubungkan dengan tabel provinsi
+            $table->unsignedBigInteger('province_id');
             $table->timestamps();
         });
     }

@@ -11,10 +11,17 @@ class CreateDistrictsTable extends Migration
      *
      * @return void
      */
+    // YANG NANTI AKAN DI MIGRATE (INI DI SEEDER)
     public function up()
     {
         Schema::create('districts', function (Blueprint $table) {
             $table->bigIncrements('id');
+            // Atribute nama
+            $table->string('name');
+            // Atribute yang menghubungkan dengan tabel provinsi
+            $table->unsignedBigInteger('province_id');
+            // Atribute yang menghubungkan dengan tabel kota
+            $table->unsignedBigInteger('city_id');
             $table->timestamps();
         });
     }
