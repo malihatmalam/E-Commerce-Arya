@@ -15,5 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ProvinceTableSeeder::class);
         $this->call(CityTableSeeder::class);
         $this->call(DistrictTableSeeder::class);
+        // Tambahan untuk ngedummy user 
+        $this->call(UsersTableSeeder::class); 
     }
 }
