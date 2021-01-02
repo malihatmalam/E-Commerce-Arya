@@ -1,6 +1,4 @@
-@extends('master')
 
-@section('content')
         <div >
                 <h1>HALAMAN DEPAN</h1>
         </div>
@@ -19,4 +17,3 @@
                 About Me
             </a>
         </div>
-@endsection
