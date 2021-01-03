@@ -8,6 +8,7 @@
     <meta name="author" content="Łukasz Holeczek">
     <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
     
+    {{-- JUDUL --}}
     @yield('title')
 
     <link href="{{ asset('assets/css/coreui-icons.min.css') }}" rel="stylesheet">
@@ -19,6 +20,8 @@
     <link href="{{ asset('assets/css/pace.min.css') }}" rel="stylesheet">
 </head>
 <body class="app flex-row align-items-center">
+    
+    {{-- BAGIAN KONTENT --}}
     <div class="container">
         @yield('content')
     </div>
