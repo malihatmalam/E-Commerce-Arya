@@ -15,10 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
+// BAGIAN LOGIN DAN REGISTRASI
 Auth::routes();
 
 
+// ADMINISTRASI (BAGIAN ADMIN)
 //CONTOH: /administrator/.....
 
 Route::group(['prefix' => 'administrator', 'middleware' => 'auth'], function() {

@@ -7,11 +7,15 @@
 
 @section('content')
 <main class="main">
-    <ol class="breadcrumb">
+
+    {{-- Breadcrumb, Home > Kategori  --}}
+     <ol class="breadcrumb">
         <li class="breadcrumb-item">Home</li>
         <li class="breadcrumb-item active">Kategori</li>
-    </ol>
-    <div class="container-fluid">
+     </ol>
+
+    {{-- Bagian Inti --}}
+     <div class="container-fluid">
         <div class="animated fadeIn">
             <div class="row">
               	
@@ -128,6 +132,7 @@
                 <!-- BAGIAN INI AKAN MENG-HANDLE TABLE LIST CATEGORY  -->
             </div>
         </div>
-    </div>
+     </div>
+
 </main>
 @endsection
