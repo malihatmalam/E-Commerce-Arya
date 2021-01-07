@@ -25,6 +25,10 @@ Auth::routes();
 Route::group(['prefix' => 'administrator', 'middleware' => 'auth'], function() {
     Route::get('/home', 'HomeController@index')->name('home'); //JADI ROUTING INI SUDAH ADA DARI ARTIKEL SEBELUMNYA TAPI KITA PINDAHKAN KEDALAM GROUPING
 
-    //INI ADALAH ROUTE BARU (Merangkum route store, index, update, delete. Kecuali create dan show )
+    //INI ADALAH ROUTE UNTUK KATEGORI BARU (Merangkum route store, index, update, delete. Kecuali create dan show )
     Route::resource('category', 'CategoryController')->except(['create', 'show']);
+
+    //INI ADALAH ROUTE UNTUK PRODUK (Merangkum route store, index, update, delete, create dan show)
+    Route::resource('product', 'ProductController');
+
 });

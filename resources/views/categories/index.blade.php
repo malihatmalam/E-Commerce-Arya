@@ -1,6 +1,7 @@
 <!-- MEMANGGIL MASTER TEMPLATE YANG SUDAH DIBUAT SEBELUMNYA, YAKNI admin.blade.php -->
 @extends('layouts.admin')
 
+{{-- Mengubah Title menjadi List Kategori --}}
 @section('title')
     <title>List Kategori</title>
 @endsection

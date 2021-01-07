@@ -24,6 +24,13 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_id');
     }
     
+    //INI ADALAH METHOD UNTUK MENG-HANDLE RELATIONSHIPS antara kategori dengan produk (1 Kategori memiliki banyak Produk)
+    public function product()
+    {
+        //JENIS RELASINYA ADALAH ONE TO MANY, YANG BERARTI KATEGORI INI BISA DIGUNAKAN OLEH BANYAK PRODUK
+        return $this->hasMany(Product::class);
+    }
+
 
     //UNTUK LOCAL SCOPE NAMA METHODNYA DIAWAL DENGAN KATA scope DAN DIIKUTI DENGAN NAMA METHOD YANG DIINGINKAN
     //CONTOH: scopeNamaMethod()
