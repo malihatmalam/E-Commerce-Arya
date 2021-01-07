@@ -18,8 +18,9 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        // Dikarenakan menggunakan prefix administrator, maka redirect bukan ke /home tapi ke /administrator/home
         if (Auth::guard($guard)->check()) {
-            return redirect(RouteServiceProvider::HOME);
+            return redirect('/administrator/home');
         }
 
         return $next($request);

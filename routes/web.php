@@ -18,4 +18,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+//CONTOH: /administrator/.....
+
+Route::group(['prefix' => 'administrator', 'middleware' => 'auth'], function() {
+    Route::get('/home', 'HomeController@index')->name('home'); //JADI ROUTING INI SUDAH ADA DARI ARTIKEL SEBELUMNYA TAPI KITA PINDAHKAN KEDALAM GROUPING
+
+    //INI ADALAH ROUTE BARU (Merangkum route store, index, update, delete. Kecuali create dan show )
+    Route::resource('category', 'CategoryController')->except(['create', 'show']);
+});

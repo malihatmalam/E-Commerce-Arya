@@ -7,11 +7,16 @@
          </li>
  
          <li class="nav-title">MANAJEMEN PRODUK</li>
+ 
+        {{-- Kategori --}}
          <li class="nav-item">
-             <a class="nav-link" href="#">
-                 <i class="nav-icon icon-drop"></i> Kategori
-             </a>
+            <a class="nav-link" href="{{ route('category.index') }}">
+                <i class="nav-icon icon-drop"></i> Kategori
+            </a>
          </li>
+        
+        
+        {{-- Pengaturan --}}
          <li class="nav-item nav-dropdown">
              <a class="nav-link nav-dropdown-toggle" href="#">
                  <i class="nav-icon icon-settings"></i> Pengaturan
@@ -24,6 +29,7 @@
                  </li>
              </ul>
          </li>
+
      </ul>
  </nav>
  
