@@ -9,11 +9,17 @@ use Illuminate\Support\Str;
 use App\Product; 
 //MODEL KATEGORI ( karena akan mengambil : Database, function, Relasi dari model Kategori)
 use App\Category;
+//MENGGUNAKAN (AKSES) FILE, SEPERTI POST FILE DLL  
 use File;
+//MASS UPLOAD 
+use App\Jobs\ProductJob;
 
 
 class ProductController extends Controller
 {
+
+// CRUD Product
+
     //Menampilkan Produck 
     public function index()
     {
@@ -82,6 +88,52 @@ class ProductController extends Controller
         }
     }
 
+    //Membawa ke View Edit (untuk di update) 
+    public function edit($id)
+    {
+        $product = Product::find($id); //AMBIL DATA PRODUK TERKAIT BERDASARKAN ID
+        $category = Category::orderBy('name', 'DESC')->get(); //AMBIL SEMUA DATA KATEGORI
+        return view('products.edit', compact('product', 'category')); //LOAD VIEW DAN PASSING DATANYA KE VIEW
+    }
+
+    //Memperbaharui Data Produk (Update) 
+    public function update(Request $request, $id)
+    {
+       //VALIDASI DATA YANG DIKIRIM
+        $this->validate($request, [
+            'name' => 'required|string|max:100',
+            'description' => 'required',
+            'category_id' => 'required|exists:categories,id',
+            'price' => 'required|integer',
+            'weight' => 'required|integer',
+            'image' => 'nullable|image|mimes:png,jpeg,jpg' //IMAGE BISA NULLABLE
+        ]);
+    
+        $product = Product::find($id); //AMBIL DATA PRODUK YANG AKAN DIEDIT BERDASARKAN ID
+        $filename = $product->image; //SIMPAN SEMENTARA NAMA FILE IMAGE SAAT INI
+      
+        //JIKA ADA FILE GAMBAR YANG DIKIRIM
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time() . Str::slug($request->name) . '.' . $file->getClientOriginalExtension();
+            //MAKA UPLOAD FILE TERSEBUT
+            $file->storeAs('public/products', $filename);
+              //DAN HAPUS FILE GAMBAR YANG LAMA
+            File::delete(storage_path('app/public/products/' . $product->image));
+        }
+    
+      //KEMUDIAN UPDATE PRODUK TERSEBUT
+        $product->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'category_id' => $request->category_id,
+            'price' => $request->price,
+            'weight' => $request->weight,
+            'image' => $filename
+        ]);
+        return redirect(route('product.index'))->with(['success' => 'Data Produk Diperbaharui']);
+    }    
+    
     //Menghapus Data Product 
     public function destroy($id)
     {
@@ -94,5 +146,37 @@ class ProductController extends Controller
         return redirect(route('product.index'))->with(['success' => 'Produk Sudah Dihapus']);
     }
 
+// Import dan Export Excel 
 
+    //Membuat form untuk upload dokumen (excel), menuju View products > bulk   
+    public function massUploadForm()
+    {
+        $category = Category::orderBy('name', 'DESC')->get();
+        return view('products.bulk', compact('category'));
+    }
+
+    //Memasukan dokumen (excel) kedalam store serve. disertai dengan validasi
+    public function massUpload(Request $request)
+    {
+        //VALIDASI DATA YANG DIKIRIM
+        $this->validate($request, [
+            'category_id' => 'required|exists:categories,id',
+            'file' => 'required|mimes:xlsx' //PASTIKAN FORMAT FILE YANG DITERIMA ADALAH XLSX
+        ]);
+    
+        // PERCABANGAN JIKA FILE ADA MAKA (FILENYA YANG DIUPLOAD) 
+        //JIKA FILE-NYA ADA
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $filename = time() . '-product.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/uploads', $filename); //MAKA SIMPAN FILE TERSEBUT DI STORAGE/APP/PUBLIC/UPLOADS
+    
+            //BUAT JADWAL UNTUK PROSES FILE TERSEBUT DENGAN MENGGUNAKAN JOB
+            //ADAPUN PADA DISPATCH KITA MENGIRIMKAN DUA PARAMETER SEBAGAI INFORMASI
+            //YAKNI KATEGORI ID DAN NAMA FILENYA YANG SUDAH DISIMPAN
+            ProductJob::dispatch($request->category_id, $filename);
+            return redirect()->back()->with(['success' => 'Upload Produk Dijadwalkan']);
+        }
+    }
+    
 }

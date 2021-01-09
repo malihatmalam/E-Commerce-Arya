@@ -28,7 +28,15 @@ Route::group(['prefix' => 'administrator', 'middleware' => 'auth'], function() {
     //INI ADALAH ROUTE UNTUK KATEGORI BARU (Merangkum route store, index, update, delete. Kecuali create dan show )
     Route::resource('category', 'CategoryController')->except(['create', 'show']);
 
-    //INI ADALAH ROUTE UNTUK PRODUK (Merangkum route store, index, update, delete, create dan show)
-    Route::resource('product', 'ProductController');
+    //INI ADALAH ROUTE UNTUK PRODUK (Merangkum route store, index, update, delete dan create. Kecuali show, karena tidak dibutuhkan)
+    Route::resource('product', 'ProductController')->except(['show']);
+
+    //MASS UPLOAD (MEMASUKAN DATA DARI DOKUMEN EXCEL)
+        //INI ADALAH ROUTE UNTUK MEMBUAT FORM DAN MENGARAHKANNYA KE VIEW BULK.
+        Route::get('/product/bulk', 'ProductController@massUploadForm')->name('product.bulk'); //TAMBAHKAN ROUTE INI
+
+        //INI ADALAH ROUTE UNTUK MENGIRIMKAN DATA (POST) DARI BENTUK EXCEL KE DALAM DATABASE .
+        Route::post('/product/bulk', 'ProductController@massUpload')->name('product.saveBulk');
+
 
 });
