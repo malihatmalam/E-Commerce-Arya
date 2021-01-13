@@ -11,12 +11,23 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+
+
 
 // BAGIAN LOGIN DAN REGISTRASI
 Auth::routes();
+
+// USER/CUSTOMER (BAGIAN USER)
+//CONTOH: /.....
+    // BAGIAN DEPAN YANG MEMUNCULKAN PRODUK
+    Route::get('/', 'Ecommerce\FrontController@index')->name('front.index');
+    // BAGIAN MENGIRIMKAN SEMUA DATA PRODUK
+    Route::get('/product', 'Ecommerce\FrontController@product')->name('front.product');
+
 
 
 // ADMINISTRASI (BAGIAN ADMIN)
