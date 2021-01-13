@@ -27,6 +27,12 @@ Auth::routes();
     Route::get('/', 'Ecommerce\FrontController@index')->name('front.index');
     // BAGIAN MENGIRIMKAN SEMUA DATA PRODUK
     Route::get('/product', 'Ecommerce\FrontController@product')->name('front.product');
+    // BAGIAN JIKA KATEGORI DI KLIK AKAN MUNCUL DATA
+    Route::get('/category/{slug}', 'Ecommerce\FrontController@categoryProduct')->name('front.category');
+    // BAGIAN DETAIL PRODUK
+    Route::get('/product/{slug}', 'Ecommerce\FrontController@show')->name('front.show_product');
+
+
 
 
 

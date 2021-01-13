@@ -63,11 +63,18 @@
                                 <h5>Rp {{ number_format($row->price) }}</h5>
                             </div>
                         </div>
+
+                        {{-- Bila tidak ada data --}}
                         @empty
+                        <div class="col-md-12">
+                            <h3 class="text-center">Tidak ada produk</h3>
+                        </div>
+
                         @endforelse
                       <!-- PROSES LOOPING DATA PRODUK, SAMA DENGAN CODE YANG ADDA DIHALAMAN HOME -->
                     </div>
                 </div>
+
                 <div class="col-lg-3">
                     <div class="left_sidebar_area">
                         <aside class="left_widgets cat_widgets">
@@ -75,17 +82,20 @@
                                 <h3>Kategori Produk</h3>
                             </div>
                             <div class="widgets_inner">
-                                <ul class="list">
-                                  
-                                  	<!-- PROSES LOOPING DATA KATEGORI -->
+                                <ul class="list" >
                                     @foreach ($categories as $category)
                                     <li>
-                                        <!-- JIKA CHILDNYA ADA, MAKA KATEGORI INI AKAN MENG-EXPAND DATA DIBAWAHNYA -->
-                                        <a href="{{ $category->child_count > 0 ? '#':url('/category/' . $category->slug) }}">{{ $category->name }}</a>
-                                        
-                                      	<!-- PROSES LOOPING DATA CHILD KATEGORI -->
+                                    
+                                        <!-- MODIFIKASI BAGIAN INI -->
+                                        <strong><a href="{{ url('/category/' . $category->slug) }}">{{ $category->name }}</a></strong>
+                                    <!-- MODIFIKASI BAGIAN INI -->
+
                                         @foreach ($category->child as $child)
-                                        <ul class="list">
+                                    
+                                        <!-- MODIFIKASI BAGIAN INI -->
+                                        <ul class="list" style="display: block">
+                                        <!-- MODIFIKASI BAGIAN INI -->
+                                        
                                             <li>
                                                 <a href="{{ url('/category/' . $child->slug) }}">{{ $child->name }}</a>
                                             </li>
@@ -98,7 +108,7 @@
                         </aside>
                     </div>
                 </div>
-            </div>
+
 
           	<!-- GENERATE PAGINATION PRODUK -->
             <div class="row">
